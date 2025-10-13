@@ -64,7 +64,7 @@
   },
   {
     "ContainingType": "Jwt.Controllers.UserController",
-    "Method": "Validate",
+    "Method": "Login",
     "RelativePath": "api/User/Login",
     "HttpMethod": "POST",
     "IsController": true,

@@ -14,7 +14,18 @@ namespace Jwt
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            // Thêm CORS service
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularApp",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:4200") // cho phép Angular frontend
+                              .AllowAnyHeader()
+                              .AllowAnyMethod()
+                              .AllowCredentials();
+                    });
+            });
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -52,6 +63,8 @@ namespace Jwt
             });
 
             var app = builder.Build();
+            // 2️⃣ Bật CORS trước khi map controllers
+            app.UseCors("AllowAngularApp");
             
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

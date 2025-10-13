@@ -23,12 +23,12 @@ namespace Jwt.Controllers
             _appSetting = otionsMonitor.Value;
         }
         [HttpPost("Login")]
-        public async Task<IActionResult> Validate (LoginModel model)
+        public async Task<IActionResult> Login (LoginModel model)
         {
             var user = _context.NguoiDungs.SingleOrDefault(x => x.UserName == model.UserName && x.Password == model.Password);
             if (user == null)
             {
-                return Ok(new ApiResponse
+                return BadRequest(new ApiResponse
                 {
                     Success = false,
                     Message = "Đăng nhập thất bại",
@@ -61,7 +61,7 @@ namespace Jwt.Controllers
                         
                     
                 }),
-                Expires = DateTime.UtcNow.AddSeconds(20),
+                Expires = DateTime.UtcNow.AddMinutes(5),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
@@ -211,9 +211,9 @@ namespace Jwt.Controllers
         private DateTime ConvertUnixTimeToDateTime(long utcExp)
         {
             var dateTimeInterval = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dateTimeInterval.AddSeconds(utcExp).ToUniversalTime();
-
-            return dateTimeInterval;
+            return dateTimeInterval.AddSeconds(utcExp).ToUniversalTime();
         }
+
+
     }
 }

@@ -1,0 +1,128 @@
+<div class="container my-5">
+  <h2 class="text-center mb-4 text-primary fw-bold">Danh sách sản phẩm</h2>
+    <button type="button" (click) = "clickLogout()" class="btn btn-primary d-flex ms-auto">Đăng xuất</button>
+  <!-- Danh sách sản phẩm -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <table class="table table-hover align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Tên sản phẩm</th>
+            <th>Mô tả</th>
+            <th>Giá</th>
+            <th>Ảnh</th>
+            <th>Mã loại</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of products">
+            <td class="fw-semibold">{{ p.name }}</td>
+            <td>{{ p.description }}</td>
+            <td class="text-success">{{ p.price | currency:'VND' }}</td>
+            <td>
+              <img [src]="p.imageUrl" alt="Ảnh sản phẩm" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover;">
+            </td>
+            <td>{{ p.maLoai }}</td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm me-2" (click)="openEdit(p)">
+                <i class="bi bi-pencil-square"></i> Sửa
+              </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="deleteProduct(p.id)">
+                <i class="bi bi-trash"></i> Xóa
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="products.length === 0">
+            <td colspan="6" class="text-muted">Không có sản phẩm nào</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Form thêm sản phẩm -->
+  <div class="card shadow-lg mt-5">
+    <div class="card-body">
+      <h4 class="text-center mb-4 text-success fw-bold">Thêm sản phẩm mới</h4>
+      <form class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Tên sản phẩm</label>
+          <input [(ngModel)]="newProduct.name" name="name" class="form-control" placeholder="Nhập tên sản phẩm" />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Giá</label>
+          <input [(ngModel)]="newProduct.price" name="price" type="number" class="form-control" placeholder="Nhập giá" />
+        </div>
+
+        <div class="col-md-12">
+          <label class="form-label">Mô tả</label>
+          <textarea [(ngModel)]="newProduct.description" name="description" class="form-control" placeholder="Nhập mô tả"></textarea>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Ảnh (URL)</label>
+          <input [(ngModel)]="newProduct.imageUrl" name="imageUrl" class="form-control" placeholder="Nhập link ảnh" />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Mã loại</label>
+          <input [(ngModel)]="newProduct.maLoai" name="maLoai" type="number" class="form-control" placeholder="Nhập mã loại" />
+        </div>
+
+        <div class="col-12 text-center mt-3">
+          <button type="button" class="btn btn-success px-5 py-2 fw-bold" (click)="addProduct()">
+            <i class="bi bi-plus-circle"></i> Thêm sản phẩm
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<!-- 🧩 MODAL SỬA SẢN PHẨM -->
+<div class="modal fade" id="editModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Sửa sản phẩm</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Tên sản phẩm</label>
+            <input [(ngModel)]="editProduct.name" name="editName" class="form-control" />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Giá</label>
+            <input [(ngModel)]="editProduct.price" name="editPrice" type="number" class="form-control" />
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-label">Mô tả</label>
+            <textarea [(ngModel)]="editProduct.description" name="editDescription" class="form-control"></textarea>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Ảnh (URL)</label>
+            <input [(ngModel)]="editProduct.imageUrl" name="editImage" class="form-control" />
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Mã loại</label>
+            <input [(ngModel)]="editProduct.maLoai" name="editLoai" type="number" class="form-control" />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary" (click)="updateProduct()">Lưu thay đổi</button>
+      </div>
+    </div>
+    
+  </div>
+</div>

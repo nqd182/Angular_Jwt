@@ -1,0 +1,28 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow-lg p-4" style="width: 400px;">
+    <h3 class="text-center mb-4">Đăng ký</h3>
+    <form (ngSubmit)="onRegister()" >
+      <div class="mb-3">
+        <label for="name" class="form-label">Họ tên</label>
+        <input type="text" id="hoTen" name="hoTen" [(ngModel)]="hoTen" class="form-control" placeholder="Nhập họ tên của bạn" required>
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">User Name</label>
+        <input type="text" id="userName" name="userName" [(ngModel)]="userName" class="form-control" placeholder="Nhập họ tên của bạn" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" name="email" [(ngModel)]="email" class="form-control" placeholder="Nhập email của bạn" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Mật khẩu</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" class="form-control" placeholder="Nhập mật khẩu" required>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Đăng ký</button>
+    </form>
+    <p class="text-center mt-3 mb-0">
+        Đã có tài khoản?
+        <a routerLink="/login" class="text-decoration-none">Đăng nhập ngay</a>
+      </p>
+  </div>
+</div>

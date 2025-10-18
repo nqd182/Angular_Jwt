@@ -60,6 +60,15 @@ namespace Jwt.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductModel product)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Success = false,
+                    Message = "Dữ liệu không hợp lệ",
+                    Data = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)
+                });
+            }
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return Ok(new ApiResponse

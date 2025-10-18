@@ -1,4 +1,5 @@
 ﻿
+using Jwt.Middlewares;
 using Jwt.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -91,6 +92,8 @@ namespace Jwt
             }
 
             app.UseHttpsRedirection();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();
